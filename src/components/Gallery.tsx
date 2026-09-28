@@ -1,0 +1,87 @@
+"use client";
+
+import Image from "next/image";
+import { useCallback, useEffect, useState } from "react";
+import type { ProjectImage } from "@/content/projects";
+
+export default function Gallery({ images }: { images: ProjectImage[] }) {
+  const [index, setIndex] = useState<number | null>(null);
+
+  const close = useCallback(() => setIndex(null), []);
+  const step = useCallback(
+    (dir: number) => setIndex((i) => (i === null ? i : (i + dir + images.length) % images.length)),
+    [images.length]
+  );
+
+  useEffect(() => {
+    if (index === null) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") close();
+      if (e.key === "ArrowRight") step(1);
+      if (e.key === "ArrowLeft") step(-1);
+    };
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [index, close, step]);
+
+  return (
+    <>
+      <div className="grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-4">
+        {images.map((image, i) => (
+          <button
+            key={image.src}
+            type="button"
+            onClick={() => setIndex(i)}
+            className={`group relative overflow-hidden rounded-xl bg-ink-3 ${
+              i === 0 ? "col-span-2 row-span-2 aspect-[4/3] md:aspect-auto" : "aspect-[4/3]"
+            }`}
+            aria-label={`View larger: ${image.alt}`}
+          >
+            <Image
+              src={image.src}
+              alt={image.alt}
+              fill
+              sizes={i === 0 ? "(min-width: 768px) 66vw, 100vw" : "(min-width: 768px) 33vw, 50vw"}
+              className="object-cover transition-transform duration-700 group-hover:scale-105"
+            />
+            <span className="absolute inset-0 bg-black/0 transition-colors duration-300 group-hover:bg-black/20" />
+          </button>
+        ))}
+      </div>
+
+      {index !== null && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label="Image viewer"
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/95 p-4"
+          onClick={close}
+        >
+          <div className="relative h-[80vh] w-full max-w-6xl" onClick={(e) => e.stopPropagation()}>
+            <Image src={images[index].src} alt={images[index].alt} fill sizes="100vw" className="object-contain" />
+          </div>
+          <p className="absolute bottom-6 left-1/2 -translate-x-1/2 text-sm text-white/70">
+            {images[index].alt} &middot; {index + 1} / {images.length}
+          </p>
+          <button type="button" onClick={close} className="absolute right-4 top-4 grid size-12 place-items-center rounded-full bg-white/10 text-2xl text-white hover:bg-white/20" aria-label="Close">
+            &times;
+          </button>
+          {images.length > 1 && (
+            <>
+              <button type="button" onClick={(e) => { e.stopPropagation(); step(-1); }} className="absolute left-4 top-1/2 grid size-12 -translate-y-1/2 place-items-center rounded-full bg-white/10 text-xl text-white hover:bg-white/20" aria-label="Previous image">
+                &larr;
+              </button>
+              <button type="button" onClick={(e) => { e.stopPropagation(); step(1); }} className="absolute right-4 top-1/2 grid size-12 -translate-y-1/2 place-items-center rounded-full bg-white/10 text-xl text-white hover:bg-white/20" aria-label="Next image">
+                &rarr;
+              </button>
+            </>
+          )}
+        </div>
+      )}
+    </>
+  );
+}

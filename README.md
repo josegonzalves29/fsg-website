@@ -1,36 +1,40 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# FS Gonzalves Construction website
 
-## Getting Started
+Portfolio website for FS Gonzalves Construction (FSG), built with Next.js 16, React 19 and Tailwind CSS 4.
 
-First, run the development server:
+## Run it locally
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Then open http://localhost:3000.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Where things live
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| What | File |
+| --- | --- |
+| Phone, email, WhatsApp, address, socials, services, values | `src/content/site.ts` |
+| Projects (portfolio) | `src/content/projects.ts` |
+| Project photos | `public/projects/<project-slug>/` |
+| Logo | `public/brand/fsg-logo.png` |
+| Brand colours and fonts | `src/app/globals.css` (the `@theme` block) |
+| Pages | `src/app/` (`page.tsx`, `projects/`, `about/`, `contact/`) |
+| Shared components | `src/components/` |
 
-## Learn More
+## Add a new project
 
-To learn more about Next.js, take a look at the following resources:
+1. Create a folder in `public/projects/`, e.g. `public/projects/margate-beach-apartments/`.
+2. Drop the photos in (JPG, ideally 1920px wide or larger). Name them `01-...jpg`, `02-...jpg` so they stay in order.
+3. In `src/content/projects.ts`, copy an existing entry, paste it into the list and update the details.
+4. Set `featured: true` if it should appear on the homepage. The first featured project is also the homepage hero image.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+That's it. The Projects page, the project's own page, the footer and the sitemap update automatically.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Before going live
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- [ ] Fill in `phone`, `email` and `whatsapp` in `src/content/site.ts` (this also switches on the quote form)
+- [ ] Confirm the services list and About page story with the business
+- [ ] Set `url` in `src/content/site.ts` to the real domain
+- [ ] Get higher-resolution originals of the project photos where possible
