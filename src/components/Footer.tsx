@@ -12,8 +12,8 @@ export default function Footer() {
 
   return (
     <footer className="bg-ink text-white/70">
-      <div className="mx-auto grid max-w-7xl gap-12 px-5 py-16 md:grid-cols-12 md:px-8 md:py-20">
-        <div className="md:col-span-4">
+      <div className="mx-auto grid max-w-7xl gap-10 px-5 py-16 sm:grid-cols-2 md:grid-cols-12 md:gap-12 md:px-8 md:py-20">
+        <div className="sm:col-span-2 md:col-span-4">
           <div className="flex items-center gap-3">
             <span className="grid size-14 place-items-center rounded-xl bg-white p-1.5">
               <Image src="/brand/fsg-logo.png" alt="" width={209} height={192} className="h-auto w-full" />
@@ -29,10 +29,10 @@ export default function Footer() {
 
         <div className="md:col-span-2">
           <h3 className="text-xs font-semibold uppercase tracking-[0.2em] text-white">Explore</h3>
-          <ul className="mt-5 space-y-3 text-sm">
+          <ul className="mt-4 space-y-1 text-sm">
             {nav.map((n) => (
               <li key={n.href}>
-                <Link href={n.href} className="transition hover:text-white">
+                <Link href={n.href} className="inline-block py-1.5 transition hover:text-white">
                   {n.label}
                 </Link>
               </li>
@@ -42,10 +42,10 @@ export default function Footer() {
 
         <div className="md:col-span-3">
           <h3 className="text-xs font-semibold uppercase tracking-[0.2em] text-white">Projects</h3>
-          <ul className="mt-5 space-y-3 text-sm">
+          <ul className="mt-4 space-y-1 text-sm">
             {projects.slice(0, 5).map((p) => (
               <li key={p.slug}>
-                <Link href={`/projects/${p.slug}`} className="transition hover:text-white">
+                <Link href={`/projects/${p.slug}`} className="inline-block py-1.5 transition hover:text-white">
                   {p.title}
                 </Link>
               </li>
@@ -63,20 +63,20 @@ export default function Footer() {
           </address>
           <div className="mt-4 space-y-1 text-sm">
             {site.phone && (
-              <a href={`tel:${site.phone.replace(/\s/g, "")}`} className="block hover:text-white">
+              <a href={`tel:${site.phone.replace(/\s/g, "")}`} className="block py-1.5 hover:text-white">
                 {site.phone}
               </a>
             )}
             {site.email && (
-              <a href={`mailto:${site.email}`} className="block hover:text-white">
+              <a href={`mailto:${site.email}`} className="block py-1.5 hover:text-white">
                 {site.email}
               </a>
             )}
           </div>
           {socials.length > 0 && (
-            <div className="mt-5 flex gap-4 text-sm">
+            <div className="mt-4 flex flex-wrap gap-x-5 text-sm">
               {socials.map((s) => (
-                <a key={s.label} href={s.href} target="_blank" rel="noreferrer" className="hover:text-white">
+                <a key={s.label} href={s.href} target="_blank" rel="noreferrer" className="inline-block py-1.5 hover:text-white">
                   {s.label}
                 </a>
               ))}

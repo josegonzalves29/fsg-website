@@ -8,7 +8,7 @@
 // automatically. Set `featured: true` to show it on the homepage.
 // ---------------------------------------------------------------
 
-export type ProjectCategory = "Commercial" | "Healthcare" | "Residential" | "Industrial";
+export type ProjectCategory = "Commercial" | "Healthcare" | "Public Sector" | "Residential" | "Industrial";
 
 export type ProjectImage = {
   src: string;
@@ -49,7 +49,6 @@ export const projects: Project[] = [
     images: [
       img("audi-centre-margate", "01-showroom-dusk.jpg", "Audi Centre Margate showroom lit up at dusk"),
       img("audi-centre-margate", "02-frontage.jpg", "Glass showroom frontage of Audi Centre Margate"),
-      img("audi-centre-margate", "03-exterior.jpg", "Exterior of the building at twilight"),
     ],
     featured: true,
   },
@@ -62,11 +61,9 @@ export const projects: Project[] = [
     description: [
       "A multi-storey medical facility on George Street in Port Shepstone, including patient wards, a nurses' station, reception and waiting areas, and administrative offices.",
     ],
-    cover: img("hibiscus-hospital", "01-entrance.jpg", "Hibiscus Hospital entrance and parking"),
+    cover: img("hibiscus-hospital", "01-exterior-dusk.jpg", "Hibiscus Hospital exterior lit up at dusk"),
     images: [
-      img("hibiscus-hospital", "01-entrance.jpg", "Hibiscus Hospital entrance and parking"),
-      img("hibiscus-hospital", "02-exterior.jpg", "Hibiscus Hospital exterior"),
-      img("hibiscus-hospital", "03-exterior-side.jpg", "Side view of Hibiscus Hospital"),
+      img("hibiscus-hospital", "01-exterior-dusk.jpg", "Hibiscus Hospital exterior lit up at dusk"),
       img("hibiscus-hospital", "04-reception-lounge.jpg", "Bright reception and lounge area"),
       img("hibiscus-hospital", "05-offices.jpg", "Administrative offices"),
       img("hibiscus-hospital", "06-nurses-station.jpg", "Nurses' station"),
@@ -86,6 +83,23 @@ export const projects: Project[] = [
     cover: img("fsg-head-office", "01-exterior.jpg", "FS Gonzalves Construction head office"),
     images: [img("fsg-head-office", "01-exterior.jpg", "FS Gonzalves Construction head office")],
     featured: true,
+  },
+  {
+    slug: "ugu-municipality",
+    title: "Ugu Municipality",
+    // TODO: confirm the street address and the official building name.
+    location: "KZN South Coast",
+    category: "Public Sector",
+    summary: "Modern municipal offices in face brick, render and glass.",
+    description: [
+      "Multi-storey municipal offices combining face brick, rendered panels and extensive glazing, with landscaped parking at the entrance.",
+    ],
+    cover: img("ugu-municipality", "01-entrance.jpg", "Ugu Municipality offices entrance and parking"),
+    images: [
+      img("ugu-municipality", "01-entrance.jpg", "Ugu Municipality offices entrance and parking"),
+      img("ugu-municipality", "02-exterior.jpg", "Ugu Municipality offices exterior"),
+      img("ugu-municipality", "03-exterior-side.jpg", "Side view of the Ugu Municipality offices"),
+    ],
   },
 ];
 

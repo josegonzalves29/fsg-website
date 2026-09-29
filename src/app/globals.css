@@ -65,6 +65,17 @@ body {
   .animate-slow-zoom { animation: none; }
 }
 
+/* Home hero headline: scales with screen width AND height,
+   so it never overflows small phones or landscape screens. */
+.hero-title {
+  font-size: clamp(1.9rem, min(9.5vw, 13svh), 7.5rem);
+  overflow-wrap: anywhere;
+}
+/* Short landscape screens (phones on their side) */
+@media (max-height: 520px) and (orientation: landscape) {
+  .hero-inner { padding-top: 6.5rem; padding-bottom: 2.5rem; }
+}
+
 /* Subtle blueprint grid used on dark sections */
 .bg-blueprint {
   background-image:

@@ -13,11 +13,11 @@ export function RoofMark({ className = "" }: { className?: string }) {
 export function Eyebrow({ children, tone = "dark" }: { children: ReactNode; tone?: "dark" | "light" }) {
   return (
     <p
-      className={`flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.25em] ${
+      className={`flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.18em] sm:text-xs sm:tracking-[0.25em] ${
         tone === "light" ? "text-white/60" : "text-steel"
       }`}
     >
-      <RoofMark className="h-3 w-8 text-brand-light" />
+      <RoofMark className="h-3 w-8 shrink-0 text-brand-light" />
       {children}
     </p>
   );
@@ -40,7 +40,7 @@ export function Button({ href, children, variant = "primary", className = "" }: 
   return (
     <Link
       href={href}
-      className={`group inline-flex items-center gap-3 rounded-full px-7 py-4 text-sm font-semibold transition-all duration-300 ${styles} ${className}`}
+      className={`group inline-flex items-center gap-3 whitespace-nowrap rounded-full px-7 py-4 text-sm font-semibold transition-all duration-300 ${styles} ${className}`}
     >
       {children}
       <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-1">

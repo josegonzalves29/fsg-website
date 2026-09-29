@@ -13,7 +13,7 @@ type Props = {
 /** Dark banner used at the top of inner pages. */
 export default function PageHero({ eyebrow, title, intro, image, children }: Props) {
   return (
-    <section className="relative isolate overflow-hidden bg-ink pb-16 pt-36 text-white md:pb-24 md:pt-44">
+    <section className="relative isolate overflow-hidden bg-ink pb-14 pt-32 text-white md:pb-24 md:pt-44">
       {image ? (
         <>
           <Image src={image.src} alt={image.alt} fill preload sizes="100vw" className="-z-20 animate-slow-zoom object-cover" />
@@ -24,10 +24,10 @@ export default function PageHero({ eyebrow, title, intro, image, children }: Pro
       )}
       <div className="mx-auto max-w-7xl px-5 md:px-8">
         <Eyebrow tone="light">{eyebrow}</Eyebrow>
-        <h1 className="mt-6 max-w-4xl font-display text-5xl font-extrabold leading-[0.98] tracking-tight md:text-7xl">
+        <h1 className="mt-6 max-w-4xl font-display text-[clamp(2.25rem,9vw,4.5rem)] font-extrabold leading-[0.98] tracking-tight">
           {title}
         </h1>
-        {intro && <div className="mt-6 max-w-2xl text-lg leading-relaxed text-white/70">{intro}</div>}
+        {intro && <div className="mt-6 max-w-2xl text-base leading-relaxed text-white/70 sm:text-lg">{intro}</div>}
         {children}
       </div>
     </section>

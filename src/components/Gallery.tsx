@@ -1,11 +1,12 @@
 "use client";
 
 import Image from "next/image";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import type { ProjectImage } from "@/content/projects";
 
 export default function Gallery({ images }: { images: ProjectImage[] }) {
   const [index, setIndex] = useState<number | null>(null);
+  const touchX = useRef<number | null>(null);
 
   const close = useCallback(() => setIndex(null), []);
   const step = useCallback(
@@ -58,13 +59,20 @@ export default function Gallery({ images }: { images: ProjectImage[] }) {
           role="dialog"
           aria-modal="true"
           aria-label="Image viewer"
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/95 p-4"
+          className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-black/95 px-3 pb-24 pt-16 sm:p-16"
           onClick={close}
+          onTouchStart={(e) => (touchX.current = e.touches[0].clientX)}
+          onTouchEnd={(e) => {
+            if (touchX.current === null) return;
+            const dx = e.changedTouches[0].clientX - touchX.current;
+            if (Math.abs(dx) > 50) step(dx < 0 ? 1 : -1);
+            touchX.current = null;
+          }}
         >
-          <div className="relative h-[80vh] w-full max-w-6xl" onClick={(e) => e.stopPropagation()}>
+          <div className="relative h-full w-full max-w-6xl" onClick={(e) => e.stopPropagation()}>
             <Image src={images[index].src} alt={images[index].alt} fill sizes="100vw" className="object-contain" />
           </div>
-          <p className="absolute bottom-6 left-1/2 -translate-x-1/2 text-sm text-white/70">
+          <p className="absolute inset-x-16 bottom-8 text-center text-sm text-white/70 sm:bottom-5">
             {images[index].alt} &middot; {index + 1} / {images.length}
           </p>
           <button type="button" onClick={close} className="absolute right-4 top-4 grid size-12 place-items-center rounded-full bg-white/10 text-2xl text-white hover:bg-white/20" aria-label="Close">
@@ -72,10 +80,10 @@ export default function Gallery({ images }: { images: ProjectImage[] }) {
           </button>
           {images.length > 1 && (
             <>
-              <button type="button" onClick={(e) => { e.stopPropagation(); step(-1); }} className="absolute left-4 top-1/2 grid size-12 -translate-y-1/2 place-items-center rounded-full bg-white/10 text-xl text-white hover:bg-white/20" aria-label="Previous image">
+              <button type="button" onClick={(e) => { e.stopPropagation(); step(-1); }} className="absolute bottom-5 left-4 grid size-12 place-items-center sm:bottom-auto sm:top-1/2 sm:-translate-y-1/2 rounded-full bg-white/10 text-xl text-white hover:bg-white/20" aria-label="Previous image">
                 &larr;
               </button>
-              <button type="button" onClick={(e) => { e.stopPropagation(); step(1); }} className="absolute right-4 top-1/2 grid size-12 -translate-y-1/2 place-items-center rounded-full bg-white/10 text-xl text-white hover:bg-white/20" aria-label="Next image">
+              <button type="button" onClick={(e) => { e.stopPropagation(); step(1); }} className="absolute bottom-5 right-4 grid size-12 place-items-center sm:bottom-auto sm:top-1/2 sm:-translate-y-1/2 rounded-full bg-white/10 text-xl text-white hover:bg-white/20" aria-label="Next image">
                 &rarr;
               </button>
             </>

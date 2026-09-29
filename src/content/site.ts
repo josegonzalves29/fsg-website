@@ -13,7 +13,7 @@ export const site = {
     "FS Gonzalves Construction is a family-run construction company based in Port Shepstone, building commercial and healthcare spaces across the KZN South Coast.",
   serviceArea: "KZN South Coast",
   // TODO: change to the real domain once it is registered.
-  url: "https://www.example.com",
+  url: "https://fsgcon.netlify.app",
 
   address: {
     line1: "13 Indus Road",

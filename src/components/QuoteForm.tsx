@@ -91,12 +91,12 @@ export default function QuoteForm() {
       </label>
       <div className="flex flex-wrap gap-3 pt-2 sm:col-span-2">
         {canEmail && (
-          <button type="submit" value="email" className="rounded-full bg-brand px-7 py-4 text-sm font-semibold text-white transition hover:bg-brand-light">
+          <button type="submit" value="email" className="w-full rounded-full bg-brand px-7 py-4 text-sm font-semibold text-white transition hover:bg-brand-light sm:w-auto">
             Send by Email
           </button>
         )}
         {canWhatsApp && (
-          <button type="submit" value="whatsapp" className="rounded-full bg-ink px-7 py-4 text-sm font-semibold text-white transition hover:bg-ink-3">
+          <button type="submit" value="whatsapp" className="w-full rounded-full bg-ink px-7 py-4 text-sm font-semibold text-white transition hover:bg-ink-3 sm:w-auto">
             Send via WhatsApp
           </button>
         )}

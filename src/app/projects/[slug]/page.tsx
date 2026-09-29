@@ -42,17 +42,17 @@ export default async function ProjectPage(props: PageProps<"/projects/[slug]">) 
   return (
     <>
       {/* Hero */}
-      <section className="relative isolate flex min-h-[85svh] items-end overflow-hidden bg-ink text-white">
+      <section className="relative isolate flex min-h-[70svh] items-end overflow-hidden bg-ink text-white md:min-h-[85svh]">
         <Image src={project.cover.src} alt={project.cover.alt} fill preload sizes="100vw" className="-z-20 animate-slow-zoom object-cover" />
         <div className="absolute inset-0 -z-10 bg-gradient-to-t from-ink via-ink/40 to-ink/20" />
         <div className="mx-auto w-full max-w-7xl px-5 pb-14 pt-40 md:px-8 md:pb-20">
-          <Link href="/projects" className="text-sm text-white/60 transition hover:text-white">
+          <Link href="/projects" className="-my-2 inline-block py-2 text-sm text-white/60 transition hover:text-white">
             &larr; All projects
           </Link>
           <div className="mt-6">
             <Eyebrow tone="light">{project.category}</Eyebrow>
           </div>
-          <h1 className="mt-5 max-w-4xl font-display text-5xl font-black uppercase leading-[0.92] tracking-tight md:text-8xl">
+          <h1 className="mt-5 max-w-4xl font-display text-[clamp(2.25rem,11vw,6rem)] font-black uppercase leading-[0.92] tracking-tight [overflow-wrap:anywhere]">
             {project.title}
           </h1>
         </div>
@@ -60,7 +60,7 @@ export default async function ProjectPage(props: PageProps<"/projects/[slug]">) 
 
       {/* Details */}
       <section className="bg-paper">
-        <div className="mx-auto grid max-w-7xl gap-12 px-5 py-16 md:grid-cols-12 md:px-8 md:py-24">
+        <div className="mx-auto grid max-w-7xl gap-10 px-5 py-16 md:grid-cols-12 md:gap-12 md:px-8 md:py-24">
           <Reveal className="md:col-span-4">
             <dl className="divide-y divide-ink/10 border-y border-ink/10">
               {facts.map((f) => (
@@ -98,7 +98,7 @@ export default async function ProjectPage(props: PageProps<"/projects/[slug]">) 
           <div className="mx-auto flex max-w-7xl items-center justify-between gap-6 px-5 py-20 md:px-8 md:py-28">
             <div>
               <p className="text-xs font-semibold uppercase tracking-[0.25em] text-white/60">Next project</p>
-              <p className="mt-3 font-display text-4xl font-black uppercase md:text-6xl">{next.title}</p>
+              <p className="mt-3 font-display text-3xl font-black uppercase sm:text-4xl md:text-6xl">{next.title}</p>
             </div>
             <span className="grid size-14 shrink-0 place-items-center rounded-full bg-brand text-xl transition-transform duration-300 group-hover:translate-x-2 md:size-20">
               &rarr;

@@ -21,30 +21,49 @@ export default function Header() {
   // Close the mobile menu whenever the route changes
   useEffect(() => setOpen(false), [pathname]);
 
+  // While the mobile menu is open: lock page scroll, close on Escape,
+  // and close automatically if the screen grows to desktop width.
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
+    const mq = window.matchMedia("(min-width: 1024px)");
+    const onMq = () => mq.matches && setOpen(false);
+    document.documentElement.style.overflow = "hidden";
+    window.addEventListener("keydown", onKey);
+    mq.addEventListener("change", onMq);
+    return () => {
+      document.documentElement.style.overflow = "";
+      window.removeEventListener("keydown", onKey);
+      mq.removeEventListener("change", onMq);
+    };
+  }, [open]);
+
   const isActive = (href: string) => (href === "/" ? pathname === "/" : pathname.startsWith(href));
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
-        scrolled || open
-          ? "bg-ink/85 py-3 shadow-[0_1px_0_rgba(255,255,255,0.06)] backdrop-blur-xl"
-          : "bg-gradient-to-b from-black/60 to-transparent py-5"
+      className={`fixed inset-x-0 top-0 z-50 flex flex-col transition-[background-color,padding,box-shadow] duration-500 ${
+        open
+          ? "h-[100svh] overflow-y-auto bg-ink py-3"
+          : scrolled
+            ? "bg-ink/85 py-3 shadow-[0_1px_0_rgba(255,255,255,0.06)] backdrop-blur-xl"
+            : "bg-gradient-to-b from-black/60 to-transparent py-5"
       }`}
     >
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-5 md:px-8">
-        <Link href="/" className="group flex items-center gap-3" aria-label={`${site.name} home`}>
-          <span className="grid size-11 place-items-center rounded-lg bg-white p-1 shadow-lg transition-transform duration-300 group-hover:-rotate-3">
+      <div className="mx-auto flex w-full max-w-7xl shrink-0 items-center justify-between gap-4 px-5 md:px-8">
+        <Link href="/" className="group flex min-w-0 items-center gap-3" aria-label={`${site.name} home`}>
+          <span className="grid size-11 shrink-0 place-items-center rounded-lg bg-white p-1 shadow-lg transition-transform duration-300 group-hover:-rotate-3">
             <Image src="/brand/fsg-logo.png" alt="" width={209} height={192} className="h-auto w-full" preload />
           </span>
           <span className="leading-tight text-white">
             <span className="block font-display text-lg font-extrabold tracking-wide">FSG</span>
-            <span className="block text-[10px] font-medium uppercase tracking-[0.2em] text-white/60">
+            <span className="block truncate text-[11px] font-medium uppercase tracking-[0.18em] text-white/60">
               Gonzalves Construction
             </span>
           </span>
         </Link>
 
-        <nav className="hidden items-center gap-1 md:flex" aria-label="Main">
+        <nav className="hidden items-center gap-1 lg:flex" aria-label="Main">
           {nav.map((item) => (
             <Link
               key={item.href}
@@ -63,7 +82,7 @@ export default function Header() {
           ))}
           <Link
             href="/contact"
-            className="ml-4 rounded-full bg-brand px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-brand-light"
+            className="ml-4 whitespace-nowrap rounded-full bg-brand px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-brand-light"
           >
             Request a Quote
           </Link>
@@ -72,7 +91,7 @@ export default function Header() {
         <button
           type="button"
           onClick={() => setOpen((v) => !v)}
-          className="relative grid size-11 place-items-center rounded-full text-white md:hidden"
+          className="relative grid size-11 shrink-0 place-items-center rounded-full text-white lg:hidden"
           aria-label={open ? "Close menu" : "Open menu"}
           aria-expanded={open}
         >
@@ -83,18 +102,14 @@ export default function Header() {
       </div>
 
       {/* Mobile menu */}
-      <div
-        className={`grid overflow-hidden transition-all duration-500 md:hidden ${
-          open ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
-        }`}
-      >
-        <nav className="min-h-0 px-5" aria-label="Mobile">
-          <ul className="flex flex-col gap-1 pb-6 pt-4">
+      {open && (
+        <nav className="mx-auto w-full max-w-7xl flex-1 px-5 md:px-8 lg:hidden" aria-label="Mobile">
+          <ul className="flex flex-col gap-1 pb-10 pt-6">
             {nav.map((item) => (
               <li key={item.href}>
                 <Link
                   href={item.href}
-                  className={`block border-b border-white/10 py-4 font-display text-2xl font-bold ${
+                  className={`block border-b border-white/10 py-4 font-display text-2xl font-bold sm:text-3xl ${
                     isActive(item.href) ? "text-white" : "text-white/60"
                   }`}
                 >
@@ -111,8 +126,13 @@ export default function Header() {
               </Link>
             </li>
           </ul>
+          <address className="border-t border-white/10 pt-6 text-sm not-italic leading-relaxed text-white/50">
+            {site.address.line1}, {site.address.line2}
+            <br />
+            {site.address.city}
+          </address>
         </nav>
-      </div>
+      )}
     </header>
   );
 }
